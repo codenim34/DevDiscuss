@@ -1,6 +1,6 @@
 # 💻 DevDiscuss: AI-Powered Developer Community Platform
 
-![DevDiscuss Banner](public/DE\ (2).png)
+
 
 ## 🚀 Project Overview
 
