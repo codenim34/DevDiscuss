@@ -11,7 +11,7 @@ const SignUpPage = () => {
   return (
     <>
       <div className="flex justify-center w-full mt-6">
-        <SignUp afterSignUpUrl="dashboard" />
+        <SignUp afterSignUpUrl="dev-discuss" />
       </div>
     </>
   );
