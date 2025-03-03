@@ -85,7 +85,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## 📞 Contact
 
 - Project Link: [https://github.com/codenim34/devdiscuss](https://github.com/codenim34/devdiscuss)
-- Email: support@devdiscuss.com
+- Email: tasnimashraf@iut-dhaka.edu
 
 ## 🙏 Acknowledgements
 
