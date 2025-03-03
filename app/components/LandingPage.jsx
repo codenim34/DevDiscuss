@@ -68,7 +68,7 @@ const LandingPage = () => {
             <div className="flex items-center space-x-2 sm:space-x-3">
               <Terminal className="h-8 w-8 sm:h-10 sm:w-10 text-indigo-600" />
               <span className="text-2xl sm:text-3xl font-bold text-gray-900">
-                Inherit
+                DevDiscuss
               </span>
             </div>
 
@@ -111,24 +111,7 @@ const LandingPage = () => {
 
             {/* Desktop Navigation Links (Hidden on Mobile) */}
             <div className="hidden md:flex space-x-6 items-center">
-              <Link
-                href="#features"
-                className="text-lg text-gray-600 hover:text-gray-900"
-              >
-                Features
-              </Link>
-              <Link
-                href="#mission"
-                className="text-lg text-gray-600 hover:text-gray-900"
-              >
-                Mission
-              </Link>
-              <Link
-                href="#sdgs"
-                className="text-lg text-gray-600 hover:text-gray-900"
-              >
-                SDGs
-              </Link>
+             
               <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
                 <button className="bg-[#000033] text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-colors">
                   Get Started
@@ -141,29 +124,9 @@ const LandingPage = () => {
           {isMenuOpen && (
             <div className="md:hidden bg-white shadow-md">
               <div className="flex flex-col space-y-4 px-4 py-6">
+             
                 <Link
-                  href="#features"
-                  className="text-lg text-gray-600 hover:text-gray-900"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Features
-                </Link>
-                <Link
-                  href="#mission"
-                  className="text-lg text-gray-600 hover:text-gray-900"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Mission
-                </Link>
-                <Link
-                  href="#sdgs"
-                  className="text-lg text-gray-600 hover:text-gray-900"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  SDGs
-                </Link>
-                <Link
-                  href={isSignedIn ? "/dashboard" : "/sign-in"}
+                  href={isSignedIn ? "/dev-discuss" : "/sign-in"}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <button className="bg-[#000033] text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-colors w-full">

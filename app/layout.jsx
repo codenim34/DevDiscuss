@@ -15,7 +15,7 @@ const kanit = Kanit({
 });
 
 export const metadata = {
-  title: "Inherit",
+  title: "DevDiscuss",
   description: "Inherit: A Unified Learning & Coding Platform",
   openGraph: {
     type: "website",
