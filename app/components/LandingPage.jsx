@@ -1,390 +1,190 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs"; // Import useUser from Clerk
+import { useUser } from "@clerk/nextjs"; 
+import { Button } from "@/components/ui/button";
 import {
-  Bot,
-  ChevronRight,
   Code2,
-  Globe2,
-  GraduationCap,
-  Map,
   MessageSquare,
-  Scale,
-  Terminal,
-  Trophy,
+  Search,
+  Zap,
   Users,
-  Youtube,
+  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-function FeatureCard({ icon, title, description }) {
-  return (
-    <div className="bg-white p-6 md:p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow">
-      <div className="w-16 h-16 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 mb-6">
-        {icon}
-      </div>
-      <h3 className="text-2xl font-semibold mb-3">{title}</h3>
-      <p className="text-gray-700">{description}</p>
-    </div>
-  );
-}
 
-function SDGCard({ icon, number, title, description }) {
-  return (
-    <div className="bg-white p-6 md:p-10 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-200">
-      <div className="flex flex-col sm:flex-row sm:items-center mb-6">
-        <div className="w-16 h-16 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 mb-4 sm:mb-0 sm:mr-6">
-          {icon}
-        </div>
-        <div>
-          <div className="text-sm text-indigo-600 font-semibold">
-            SDG {number}
-          </div>
-          <h3 className="text-2xl font-bold">{title}</h3>
-        </div>
-      </div>
-      <p className="text-gray-700">{description}</p>
+const FeatureCard = ({ icon, title, description }) => (
+  <div className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-slate-200">
+    <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center text-indigo-600 mb-4">
+      {icon}
     </div>
-  );
-}
+    <h3 className="text-xl font-semibold text-slate-900 mb-3">{title}</h3>
+    <p className="text-slate-700">{description}</p>
+  </div>
+);
 
 const LandingPage = () => {
-  const { isSignedIn, isLoaded } = useUser(); // Access user authentication state
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for mobile menu
+  const { isSignedIn, isLoaded } = useUser(); 
+  const router = useRouter(); 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // While the user state is loading, you might want to show a loader or nothing
   if (!isLoaded) {
-    return null; // Or a loader component
+    return null;
   }
 
+  const handleGetStartedClick = () => {
+    if (isSignedIn) {
+      router.push('/dev-discuss');
+    } else {
+      router.push('/sign-up');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Header and Navigation */}
-      <header className="relative overflow-hidden">
-        <nav className="fixed top-0 w-full z-20 bg-white shadow-md">
-          <div className="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-8 py-4">
-            {/* Logo */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <Terminal className="h-8 w-8 sm:h-10 sm:w-10 text-indigo-600" />
-              <span className="text-2xl sm:text-3xl font-bold text-gray-900">
-                DevDiscuss
-              </span>
-            </div>
-
-            {/* Hamburger Menu Button (Visible on Mobile) */}
-            <button
-              className="md:hidden focus:outline-none"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle Menu"
-            >
-              {isMenuOpen ? (
-                <svg
-                  className="w-6 h-6 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  className="w-6 h-6 text-gray-900"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
-              )}
-            </button>
-
-            {/* Desktop Navigation Links (Hidden on Mobile) */}
-            <div className="hidden md:flex space-x-6 items-center">
-             
-              <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
-                <button className="bg-[#000033] text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-colors">
-                  Get Started
-                </button>
-              </Link>
-            </div>
-          </div>
-
-          {/* Mobile Navigation Links (Visible on Mobile Only) */}
-          {isMenuOpen && (
-            <div className="md:hidden bg-white shadow-md">
-              <div className="flex flex-col space-y-4 px-4 py-6">
-             
-                <Link
-                  href={isSignedIn ? "/dev-discuss" : "/sign-in"}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <button className="bg-[#000033] text-white px-6 py-2 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-colors w-full">
-                    Get Started
-                  </button>
-                </Link>
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+        {/* Hero Section */}
+        <section className="relative pt-20 pb-16 md:pt-32 md:pb-24">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+          <div className="flex flex-col md:flex-row items-center">
+            <div className="md:w-1/2 md:pr-12">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 leading-tight mb-6">
+                Where Developers <span className="text-indigo-600">Solve Problems</span> Together
+              </h1>
+              <p className="text-lg md:text-xl text-slate-700 mb-8 max-w-lg">
+                DevDiscuss is a community-driven platform where developers can ask questions, share knowledge, and get AI-powered solutions.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button onClick={handleGetStartedClick}><ArrowRight className="ml-2 h-5 w-5" /> Join the Community</Button>
+          
+                {/* <Link href="/questions" className="inline-flex items-center justify-center px-6 py-3 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition-colors">
+                  Browse Questions
+                </Link> */}
               </div>
             </div>
-          )}
-        </nav>
+            <div className="md:w-1/2 mt-12 md:mt-0">
+              <div className="relative">
+                <div className="absolute -top-6 -left-6 w-24 h-24 bg-indigo-100 rounded-full opacity-70"></div>
+                <div className="absolute -bottom-8 -right-8 w-32 h-32 bg-indigo-100 rounded-full opacity-70"></div>
+                <div className="relative bg-white rounded-xl shadow-xl overflow-hidden border border-slate-100">
+                  <div className="bg-slate-800 text-white p-4 flex items-center">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div className="ml-4 text-sm font-mono">DevDiscuss Question</div>
+                  </div>
+                  <div className="p-6">
+                    <div className="mb-4">
+                      <h3 className="text-lg font-semibold text-slate-900 mb-2">How to implement debounce in React?</h3>
+                      <p className="text-slate-700 text-sm">I'm trying to optimize search input performance by implementing debounce. What's the best approach in a React functional component?</p>
+                    </div>
+                    <div className="border-t border-slate-200 pt-4 mt-4">
+                      <div className="flex items-start space-x-3">
+                        <div className="flex-shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-white">
+                            <Zap className="w-4 h-4" />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="flex items-center">
+                            <span className="text-sm font-semibold text-indigo-600">AI Assistant</span>
+                            <span className="ml-2 px-2 py-0.5 text-xs bg-indigo-100 text-indigo-800 rounded-full">Fastest Solution</span>
+                          </div>
+                          <p className="text-sm text-slate-700 mt-1">
+                            You can use the useCallback hook with a custom debounce function or leverage libraries like lodash:
+                          </p>
+                          <pre className="mt-2 p-3 bg-slate-100 rounded-md text-xs overflow-x-auto">
+                            <code className="text-slate-800">
+{`import { useState, useEffect, useCallback } from 'react';
 
-        {/* Hero Section */}
-        <div className="pt-24 sm:pt-32 pb-16 sm:pb-20 px-4 sm:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center text-center md:text-left">
-              <div className="md:w-1/2">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-                  Empowering Future
-                  <span className="text-indigo-600"> Tech Leaders</span> in
-                  Bangladesh
-                </h1>
-                <p className="text-lg sm:text-xl text-gray-700 mb-10 max-w-3xl mx-auto md:mx-0 px-4">
-                  Bridge the digital divide with our unified learning platform.
-                  Making coding education accessible, collaborative, and
-                  empowering for everyone.
-                </p>
-                <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-                  <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
-                    <button className="bg-indigo-600 text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-colors flex items-center justify-center w-full sm:w-auto">
-                      Start Learning <ChevronRight className="ml-3 h-6 w-6" />
-                    </button>
-                  </Link>
-                  <Link href="/watch-demo">
-                    <button className="border-2 border-gray-300 text-gray-700 px-10 py-4 rounded-full text-lg font-semibold hover:border-indigo-600 hover:text-indigo-600 transition-colors w-full sm:w-auto">
-                      Watch Demo
-                    </button>
-                  </Link>
+function SearchComponent() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedTerm, setDebouncedTerm] = useState('');
+  
+  // Update debounced value after delay
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedTerm(searchTerm);
+    }, 500);  
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+  ------------------------------------
+}`}
+                            </code>
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="md:w-1/2 mt-8 md:mt-0">
-                <img
-                  src="/hero.png"
-                  alt="hero"
-                  width={1000}
-                  height={1000}
-                  className="max-h-[70vh] object-contain object-center 2xl:max-h-[50vh]"
-                />
-              </div>
             </div>
           </div>
         </div>
-
-        {/* Statistics Section */}
-        <div className="bg-white py-12 sm:py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-indigo-600">7.5K+</div>
-                <div className="text-lg text-gray-700">Yearly IT Demand</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-indigo-600">70%</div>
-                <div className="text-lg text-gray-700">Rural Students</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-indigo-600">24/7</div>
-                <div className="text-lg text-gray-700">AI Support</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-indigo-600">100%</div>
-                <div className="text-lg text-gray-700">Free Access</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      </section>
         {/* Features Section */}
-        <div id="features" className="py-16 sm:py-24 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-20">
-              Platform Features
+        <section className="py-16 md:py-24">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+              Why Developers Choose DevDiscuss
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12">
-              <FeatureCard
-                icon={<Youtube />}
-                title="Learn Page"
-                description="Curated video tutorials and interactive coding exercises to help you master programming concepts."
-              />
-              <FeatureCard
-                icon={<Map />}
-                title="Learning Roadmaps"
-                description="Structured learning paths to guide your journey from beginner to professional developer."
-              />
-              <FeatureCard
-                icon={<Bot />}
-                title="AI Assistant"
-                description="Get instant code reviews and suggestions to improve your coding skills."
-              />
-              <FeatureCard
-                icon={<Users />}
-                title="Guided Learning"
-                description="Learn with expert guidance and mentorship in a supportive environment."
-              />
-              <FeatureCard
-                icon={<Globe2 />}
-                title="Accessible Education"
-                description="Breaking barriers to provide quality education for all, anywhere."
-              />
-              <FeatureCard
-                icon={<Trophy />}
-                title="Quests"
-                description="Engage in interactive coding challenges and earn rewards while building real-world projects."
-              />
-            </div>
+            <p className="text-lg text-slate-700 max-w-2xl mx-auto">
+              Our platform combines the best of community knowledge with cutting-edge AI to help you solve problems faster.
+            </p>
           </div>
-        </div>
-
-        {/* SDGs Section */}
-        <div id="sdgs" className="py-16 sm:py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-8">
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-20">
-              Supporting UN Sustainable Development Goals
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-16">
-              <SDGCard
-                icon={<GraduationCap />}
-                number="4"
-                title="Quality Education"
-                description="Providing accessible, high-quality coding education to bridge the digital skills gap."
-              />
-              <SDGCard
-                icon={<Scale />}
-                number="10"
-                title="Reduced Inequalities"
-                description="Breaking down barriers between urban and rural educational opportunities."
-              />
-            </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <FeatureCard 
+              icon={<MessageSquare className="w-6 h-6" />}
+              title="Community Answers"
+              description="Get solutions from experienced developers who've faced similar challenges and solved them successfully."
+            />
+            <FeatureCard 
+              icon={<Zap className="w-6 h-6" />}
+              title="AI-Powered Solutions"
+              description="Receive instant, accurate answers generated by our advanced AI that understands code context and best practices."
+            />
+            <FeatureCard 
+              icon={<Code2 className="w-6 h-6" />}
+              title="Code Snippets"
+              description="Find and share working code examples with syntax highlighting and the ability to copy with a single click."
+            />
+            <FeatureCard 
+              icon={<Users className="w-6 h-6" />}
+              title="Vibrant Community"
+              description="Join thousands of developers who collaborate, learn, and grow together in a supportive environment."
+            />
+            <FeatureCard 
+              icon={<Search className="w-6 h-6" />}
+              title="Smart Search"
+              description="Find relevant answers quickly with our intelligent search that understands technical concepts and relationships."
+            />
           </div>
-        </div>
+        </section>
 
         {/* CTA Section */}
-        <div className="bg-indigo-600 py-20">
-          <div className="max-w-7xl mx-auto px-8 text-center">
-            <h2 className="text-4xl font-bold text-white mb-8">
-              Ready to Start Your Coding Journey?
+        <section className="py-16 bg-indigo-600 text-white rounded-xl">
+          <div className="text-center">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to solve problems faster?
             </h2>
-            <p className="text-xl text-indigo-100 mb-12 max-w-3xl mx-auto">
-              Join thousands of learners who are transforming their lives
-              through code.
+            <p className="text-xl text-indigo-100 mb-8 max-w-2xl mx-auto">
+              Join our community of developers and start getting answers to your toughest coding questions today.
             </p>
-            <Link href="/join">
-              <button className="bg-white text-indigo-600 px-12 py-4 rounded-full text-lg font-semibold hover:bg-gray-100 transition-colors">
-                Join Now - It's Free
-              </button>
-            </Link>
+            <button 
+              onClick={handleGetStartedClick}
+              className="inline-flex items-center justify-center px-8 py-4 bg-white text-indigo-600 font-medium rounded-lg hover:bg-indigo-50 transition-colors"
+            >
+              Create Free Account
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </button>
           </div>
-        </div>
-
-        {/* Footer */}
-        <footer className="bg-gray-900 text-gray-400 py-12 sm:py-16">
-          <div className="max-w-7xl mx-auto px-4 sm:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12">
-              <div>
-                <h3 className="text-white font-semibold text-xl mb-6">
-                  Platform
-                </h3>
-                <ul className="space-y-3">
-                  <li>
-                    <Link href="/features" className="hover:text-white text-lg">
-                      Features
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/tutorials"
-                      className="hover:text-white text-lg"
-                    >
-                      Tutorials
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/pricing" className="hover:text-white text-lg">
-                      Pricing
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-xl mb-6">
-                  Community
-                </h3>
-                <ul className="space-y-3">
-                  <li>
-                    <Link href="/blog" className="hover:text-white text-lg">
-                      Blog
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/forums" className="hover:text-white text-lg">
-                      Forums
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-xl mb-6">
-                  Company
-                </h3>
-                <ul className="space-y-3">
-                  <li>
-                    <Link href="/about" className="hover:text-white text-lg">
-                      About
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/careers" className="hover:text-white text-lg">
-                      Careers
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/contact" className="hover:text-white text-lg">
-                      Contact
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-xl mb-6">Legal</h3>
-                <ul className="space-y-3">
-                  <li>
-                    <Link href="/privacy" className="hover:text-white text-lg">
-                      Privacy
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/terms" className="hover:text-white text-lg">
-                      Terms
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      href="/cookie-policy"
-                      className="hover:text-white text-lg"
-                    >
-                      Cookie Policy
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="border-t border-gray-800 mt-16 pt-8 text-center">
-              <p className="text-lg">
-                &copy; {new Date().getFullYear()} Inherit. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </footer>
-      </header>
+        </section>
+      </div>
     </div>
   );
 };

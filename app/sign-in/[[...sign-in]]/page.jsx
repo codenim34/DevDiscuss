@@ -11,7 +11,10 @@ const SignInPage = () => {
   return (
     <>
       <div className="flex justify-center w-full mt-6">
-        <SignIn afterSignInUrl="dev-discuss" />
+        <SignIn 
+          afterSignInUrl="/dev-discuss"
+          redirectUrl="/dev-discuss"
+        />
       </div>
     </>
   );
